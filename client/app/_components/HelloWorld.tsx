@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { HoverEffect } from "../../components/ui/card-hover-effect";
 import CryptoLanding from "@/components/ui/crypto-landing";
 import { useRouter } from 'next/navigation'
+import { HeroParallax } from "@/components/ui/hero-parallax";
 
 
 export function CardHoverEffectDemo() {
@@ -38,6 +39,100 @@ export const projects = [
   }
 ];
 
+export const products = [
+  {
+    title: "$TRUMP",
+    link: "https://x.com/realDonaldTrump/status/1880446012168249386",
+    thumbnail:
+      "https://public.bnbstatic.com/image/cms/crawler/MARSBIT_NEWS/1737179393990940.jpg",
+  },
+  {
+    title: "$TRUMP",
+    link: "https://x.com/realDonaldTrump/status/1880446012168249386",
+    thumbnail:
+      "https://public.bnbstatic.com/image/cms/crawler/MARSBIT_NEWS/1737179393990940.jpg",
+  },
+  {
+    title: "$TRUMP",
+    link: "https://x.com/realDonaldTrump/status/1880446012168249386",
+    thumbnail:
+      "https://pbs.twimg.com/media/Ghr6U3NXcAAsRqa.jpg:large",
+  },
+ 
+  {
+    title: "$MELANIA",
+    link: "https://x.com/MELANIATRUMP/status/1881094861279129643",
+    thumbnail:
+      "https://pbs.twimg.com/media/Ghr6U3NXcAAsRqa.jpg:large",
+  },
+  {
+    title: "$MELANIA",
+    link: "https://x.com/MELANIATRUMP/status/1881094861279129643",
+    thumbnail:
+      "https://pbs.twimg.com/media/Ghr6U3NXcAAsRqa.jpg:large",
+  },
+  {
+    title: "$MELANIA",
+    link: "https://x.com/MELANIATRUMP/status/1881094861279129643",
+    thumbnail:
+      "https://pbs.twimg.com/media/Ghr6U3NXcAAsRqa.jpg:large",
+  },
+ 
+  {
+    title: "$TRUMP",
+    link: "https://x.com/realDonaldTrump/status/1880446012168249386",
+    thumbnail:
+      "https://public.bnbstatic.com/image/cms/crawler/MARSBIT_NEWS/1737179393990940.jpg",
+  },
+  {
+    title: "$TRUMP",
+    link: "https://x.com/realDonaldTrump/status/1880446012168249386",
+    thumbnail:
+      "https://public.bnbstatic.com/image/cms/crawler/MARSBIT_NEWS/1737179393990940.jpg",
+  },
+  {
+    title: "$TRUMP",
+    link: "https://x.com/realDonaldTrump/status/1880446012168249386",
+    thumbnail:
+      "https://pbs.twimg.com/media/Ghr6U3NXcAAsRqa.jpg:large",
+  },
+  {
+    title: "$MELANIA",
+    link: "https://x.com/MELANIATRUMP/status/1881094861279129643",
+    thumbnail:
+      "https://pbs.twimg.com/media/Ghr6U3NXcAAsRqa.jpg:large",
+  },
+  {
+    title: "$MELANIA",
+    link: "https://x.com/MELANIATRUMP/status/1881094861279129643",
+    thumbnail:
+      "https://pbs.twimg.com/media/Ghr6U3NXcAAsRqa.jpg:large",
+  },
+  {
+    title: "$MELANIA",
+    link: "https://x.com/MELANIATRUMP/status/1881094861279129643",
+    thumbnail:
+      "https://pbs.twimg.com/media/Ghr6U3NXcAAsRqa.jpg:large",
+  },
+  {
+    title: "$TRUMP",
+    link: "https://x.com/realDonaldTrump/status/1880446012168249386",
+    thumbnail:
+      "https://public.bnbstatic.com/image/cms/crawler/MARSBIT_NEWS/1737179393990940.jpg",
+  },
+  {
+    title: "$TRUMP",
+    link: "https://x.com/realDonaldTrump/status/1880446012168249386",
+    thumbnail:
+      "https://public.bnbstatic.com/image/cms/crawler/MARSBIT_NEWS/1737179393990940.jpg",
+  },
+  {
+    title: "$TRUMP",
+    link: "https://x.com/realDonaldTrump/status/1880446012168249386",
+    thumbnail:
+      "https://pbs.twimg.com/media/Ghr6U3NXcAAsRqa.jpg:large",
+  },
+];
 
 export default function HelloWorld() {
   return (
@@ -82,7 +177,7 @@ function Home() {
           )}
         </div>
         <CryptoLanding />
-        
+        <HeroParallax products={products} />
       </WavyBackground>
     </div>
   );

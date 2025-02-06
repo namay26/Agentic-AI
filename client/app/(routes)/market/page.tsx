@@ -182,7 +182,7 @@ const MemeCoinsDashboard = () => {
                 </td>
                 <td className="py-4">
                   <div className="flex items-center gap-2">
-                    <Image
+                    <img
                       src="/api/placeholder/24/24"
                       alt={coin.name}
                       className="w-6 h-6 rounded-full"
