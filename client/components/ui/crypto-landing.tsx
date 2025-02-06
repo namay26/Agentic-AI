@@ -56,13 +56,13 @@ const CryptoLanding = () => {
               <p className="text-gray-400">Or Continue With</p>
               <div className="flex gap-4">
                 <button className="p-3 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors">
-                  <Image src="/api/placeholder/24/24" alt="Google" className="w-6 h-6" />
+                  <img src="/api/placeholder/24/24" alt="Google" className="w-6 h-6" />
                 </button>
                 <button className="p-3 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors">
-                  <Image src="/api/placeholder/24/24" alt="Apple" className="w-6 h-6" />
+                  <img src="/api/placeholder/24/24" alt="Apple" className="w-6 h-6" />
                 </button>
                 <button className="p-3 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors">
-                  <Image src="/api/placeholder/24/24" alt="QR" className="w-6 h-6" />
+                  <img src="/api/placeholder/24/24" alt="QR" className="w-6 h-6" />
                 </button>
               </div>
               <p className="text-gray-400">Download App</p>
@@ -83,7 +83,7 @@ const CryptoLanding = () => {
                 {popularCoins.map((coin) => (
                   <div key={coin.symbol} className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <Image
+                      <img
                         src="/api/placeholder/32/32"
                         alt={coin.symbol}
                         className="w-8 h-8 rounded-full"
