@@ -15,6 +15,7 @@ import cookieParser from "cookie-parser";
 // import githubRouter from "./routes/github.js";
 import { AnyType } from "./utils.js";
 import { isHttpError } from "http-errors";
+import { TweetData } from "./types.js";
 
 // Convert ESM module URL to filesystem path
 const __filename = fileURLToPath(import.meta.url);
@@ -65,6 +66,18 @@ app.listen(port, async () => {
     try{
     // Start the gaia polling service
     const twitterPoller = PollerService.getInstance();
+    twitterPoller.start();
+
+    setInterval(
+      () => {
+        for (const data of twitterPoller.scrappedData) {
+          const tweetText: string = (data as TweetData).text;
+          //send tweetText to gaia model
+          twitterPoller.scrappedData.delete(data);
+        }
+      },
+      1000 * 60 * 10
+    );
 
     // Start ngrok tunnel for development
     // const ngrokService = NgrokService.getInstance();
