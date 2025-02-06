@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  background-color: black;
+  color-scheme: dark;
+}
+
+
 html,
 body {
   @apply w-full h-full p-0 m-0 text-primary bg-secondary;
@@ -10,6 +16,14 @@ body {
 #__next, main {
   @apply w-full h-full;
 }
+
+@font-face {
+  font-family: 'GenericTechno';
+  src: url('../public/fonts/GenericTechno.otf') format('otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
 
 @layer base {
   .btn-primary {

@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
   	extend: {
+		fontFamily: {
+			custom: ['GenericTechno', 'sans-serif']
+		},
   		colors: {
   			primary: {
   				DEFAULT: 'hsl(var(--primary))',
