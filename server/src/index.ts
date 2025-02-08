@@ -68,16 +68,16 @@ app.listen(port, async () => {
     const twitterPoller = PollerService.getInstance();
     twitterPoller.start();
 
-    setInterval(
-      () => {
-        for (const data of twitterPoller.scrappedData) {
-          const tweetText: string = (data as TweetData).text;
-          //send tweetText to gaia model
-          twitterPoller.scrappedData.delete(data);
-        }
-      },
-      1000 * 60 * 10
-    );
+    // setInterval(
+    //   () => {
+    //     for (const data of twitterPoller.scrappedData) {
+    //       const tweetText: string = (data as TweetData).text;
+    //       //send tweetText to gaia model
+    //       twitterPoller.scrappedData.delete(data);
+    //     }
+    //   },
+    //   1000 * 60 * 10
+    // );
 
     // Start ngrok tunnel for development
     // const ngrokService = NgrokService.getInstance();

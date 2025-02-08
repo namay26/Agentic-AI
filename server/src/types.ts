@@ -67,3 +67,8 @@ export interface TweetData {
   text: string;
   username: string;
 }
+
+export interface TokenInfo {
+  name: string;
+  address: string;
+}
