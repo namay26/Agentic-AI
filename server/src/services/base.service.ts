@@ -1,9 +1,8 @@
 export interface IService {
-  start(): Promise<void>;
-  stop(): Promise<void>;
-}
-
-export abstract class BaseService implements IService {
-  abstract start(): Promise<void>;
-  abstract stop(): Promise<void>;
-}
+    start(): void;
+    stop(): void;
+  }
+  export abstract class BaseService implements IService {
+    abstract start(): void;
+    abstract stop(): void;
+  }
