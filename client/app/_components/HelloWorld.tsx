@@ -5,39 +5,38 @@ import { WavyBackground } from "../../components/ui/wavy-background";
 import { PrivyProvider, usePrivy } from "@privy-io/react-auth";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { HoverEffect } from "../../components/ui/card-hover-effect";
+import { CardHoverEffectDemo } from "./card-hover";
 import CryptoLanding from "@/components/ui/crypto-landing";
 import { useRouter } from 'next/navigation'
 import { HeroParallax } from "@/components/ui/hero-parallax";
+import { SparklesCore } from "@/components/ui/sparkles";
+import { WobbleCardDemo} from "./wobble-card"
+import Image from "next/image";
 
+import localFont from 'next/font/local';
 
-export function CardHoverEffectDemo() {
-  return (
-    <div className="max-w-5xl mx-auto px-8">
-      <HoverEffect items={projects} />
-    </div>
-  );
-}
-export const projects = [
-  {
-    title: "Build Faster",
-    description:
-      "A technology company that builds economic infrastructure for the internet.",
-    link: "",
-  },
-  {
-    title: "Spend less",
-    description:
-      "A streaming service that offers a wide variety of award-winning TV shows, movies, anime, documentaries, and more on thousands of internet-connected devices.",
-    link: "",
-  },
-  {
-    title: "Increase resilience",
-    description:
-      "A multinational technology company that specializes in Internet-related services and products.",
-    link: "",
-  }
-];
+const myFont = localFont({
+  src: [
+    {
+      path: '../Mimoid.woff',
+      weight: '800', 
+      style: 'normal', 
+    },
+  ],
+  display: 'swap',
+});
+
+const myFont2 = localFont({
+  src: [
+    {
+      path: '../GenericTechno.otf',
+      weight: '800', 
+      style: 'normal', 
+    },
+  ],
+  display: 'swap',
+});
+
 
 export const products = [
   {
@@ -157,18 +156,19 @@ function Home() {
       <Navbar className="top-2" login={login} logout={logout} authenticated={authenticated} user={user} />
       <WavyBackground className="w-full min-h-screen relative">
         <div className="flex flex-col items-center w-full space-y-12 p-4 pt-52">
-          <p className="text-2xl md:text-4xl lg:text-7xl text-white font-bold font-custom text-center">
-            AGENTIC AI
-          </p>
+        <h1 className={`text-2xl md:text-4xl lg:text-7xl text-white font-bold text-center ${myFont.className}`}>
+          AGENTIC AI
+        </h1>
           
           {!authenticated ? (
             <>
-              <p className="text-base md:text-lg mt-8 text-white font-normal inter-var text-center"> 
+              <p className={`text-base md:text-lg mt-8 text-white font-normal inter-var text-center ${myFont2.className}`}> 
                 Connect your wallet to get started!
               </p>
-              <div className="max-w-7xl mx-auto px-4 mt-32 pb-40"> 
+              <CardHoverEffectDemo />
+              {/* <div className="max-w-7xl mx-auto px-4 mt-32 pb-40"> 
                 <HoverEffect items={projects} />
-              </div>
+              </div> */}
             </>
           ) : (
             <p className="text-white text-lg">
@@ -178,6 +178,34 @@ function Home() {
         </div>
         <CryptoLanding />
         <HeroParallax products={products} />
+        <div className="h-[30rem] w-full bg-black flex flex-col items-center justify-center overflow-hidden rounded-md">
+            <h2 className="md:text-7xl text-3xl lg:text-9xl font-bold text-center text-white relative z-20 mb-4">
+              Features
+            </h2>
+            <div className="w-[40rem] h-32 relative">
+              {/* Gradients */}
+              <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-[2px] w-3/4 blur-sm" />
+              <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-px w-3/4" />
+              <div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-sky-500 to-transparent h-[5px] w-1/4 blur-sm" />
+              <div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-sky-500 to-transparent h-px w-1/4" />
+
+              {/* Core component */}
+              <SparklesCore
+                background="transparent"
+                minSize={0.4}
+                maxSize={1}
+                particleDensity={1200}
+                className="w-full h-full"
+                particleColor="#FFFFFF"
+              />
+
+              {/* Radial Gradient to prevent sharp edges */}
+              <div className="absolute inset-0 w-full h-full bg-black [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"></div>
+            </div>
+          </div>
+          <WobbleCardDemo />
+          {/* <StickyScrollRevealDemo /> */}
+
       </WavyBackground>
     </div>
   );
@@ -197,7 +225,7 @@ function Navbar({ className, login, logout, authenticated, user }: {
     <div
       className={cn("fixed top-10 inset-x-0 max-w-2xl mx-auto z-50", className)}
     >
-      <div className="flex justify-between items-center backdrop-blur-sm bg-white/30 dark:bg-black/30 rounded-full border border-white/20 dark:border-black/20 shadow-lg px-8 py-4">
+      <div className={`flex justify-between items-center backdrop-blur-sm bg-white/30 dark:bg-black/30 rounded-full border border-white/20 dark:border-black/20 shadow-lg px-8 py-4 ${myFont.className}`}>
         <div className="flex space-x-6 text-white justify-center">
           <MenuItem setActive={setActive} active={active} item="Buy" />
           <MenuItem setActive={setActive} active={active} item="Market" />
@@ -207,7 +235,7 @@ function Navbar({ className, login, logout, authenticated, user }: {
           {!authenticated ? (
             <button
               onClick={login}
-              className="px-4 py-2 rounded-full bg-gradient-to-b from-blue-500 to-blue-600 text-white text-sm focus:ring-2 focus:ring-blue-400 hover:shadow-xl transition duration-200"
+              className="px-4 py-2 rounded-full bg-gradient-to-b from-purple-500 to-blue-600 text-white text-sm focus:ring-2 focus:ring-blue-400 hover:shadow-xl transition duration-200"
             >
               Connect Wallet
             </button>

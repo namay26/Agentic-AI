@@ -1,5 +1,17 @@
 import "@/styles/globals.css";
 import { Inter } from "next/font/google";
+import localFont from 'next/font/local';
+
+const myFont = localFont({
+  src: [
+    {
+      path: 'GenericTechno.otf',
+      weight: '400', 
+      style: 'normal', 
+    },
+  ],
+  display: 'swap',
+});
 
 const inter = Inter({ subsets: ["latin"] });
 

@@ -5,6 +5,7 @@
 :root {
   background-color: black;
   color-scheme: dark;
+  align-items: flex-start;
 }
 
 
@@ -18,8 +19,8 @@ body {
 }
 
 @font-face {
-  font-family: 'GenericTechno';
-  src: url('../public/fonts/GenericTechno.otf') format('otf');
+  font-family: 'Mimoid';
+  src: url('../app/Mimoid.woff') format('otf');
   font-weight: normal;
   font-style: normal;
 }
