@@ -18,6 +18,7 @@ import { isHttpError } from "http-errors";
 // Convert ESM module URL to filesystem path
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+// eslint-disable-next-line no-unused-vars
 
 // Track services for graceful shutdown
 const services: IService[] = [];

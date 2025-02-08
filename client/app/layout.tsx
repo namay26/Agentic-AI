@@ -4,7 +4,7 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Collab.Land Starter Kit",
+  title: "Agentic-AI",
   description: "Get started with Collab.Land",
 };
 

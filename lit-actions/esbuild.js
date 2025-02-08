@@ -112,7 +112,7 @@ Promise.all(promises)
     console.log(
       msg
         .split("")
-        .map((_char) => "=")
+        .map(() => "=")
         .join("")
     );
     console.log(msg);
