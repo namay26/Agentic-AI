@@ -34,6 +34,8 @@ Space Coin is an AI-driven blockchain project that enables seamless cross-chain 
 - **Backend:** TypeScript, Gaia Node
 - **Blockchain:** Arbitrum, Solana
 - **AI:** Custom AI Agents for Twitter scraping
+- **Authentication:** Privy Server Wallets
+- **Deployment:** OpSec
 
 ## 📜 Why Space Coin?
 
