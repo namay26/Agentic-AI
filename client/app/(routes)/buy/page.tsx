@@ -5,7 +5,7 @@ import { X, ChevronDown } from 'lucide-react';
 import axios from 'axios';
 import Image from 'next/image';
 import { usePrivy } from "@privy-io/react-auth";
-import Web3 from 'web3'; 
+import Web3, { Contract } from 'web3'; 
 import localFont from 'next/font/local';
 import { ShootingStars } from '@/components/ui/shooting-stars';
 import { StarsBackground } from '@/components/ui/stars-background';
@@ -402,7 +402,7 @@ const CryptoTradingPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 	const [memeCoinName, setMemeCoinName] = useState<string>(''); 
-  const [contract, setContract] = useState<Web3['eth']['Contract'] | null>(null);
+  const [contract, setContract] = useState<Contract | null>(null);
   const [web3, setWeb3] = useState<Web3 | null>(null);
 
 
