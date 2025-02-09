@@ -2,7 +2,8 @@
 import { cn } from "@/lib/utils";
 import React, { useEffect, useRef, useState } from "react";
 import { createNoise3D } from "simplex-noise";
-
+import { ShootingStars } from "./shooting-stars";
+import { StarsBackground } from "./stars-background";
 export const WavyBackground = ({
   children,
   className,
@@ -112,10 +113,12 @@ export const WavyBackground = ({
   return (
     <div
       className={cn(
-        "h-screen w-full flex flex-col items-center justify-center",
+        "h-screen w-full items-center justify-center",
         containerClassName
       )}
     >
+      {/* <ShootingStars />
+      <StarsBackground /> */}
       <canvas
         className="absolute inset-0 z-0 w-full h-full"
         ref={canvasRef}
@@ -124,6 +127,8 @@ export const WavyBackground = ({
           ...(isSafari ? { filter: `blur(${blur}px)` } : {}),
         }}
       ></canvas>
+      <ShootingStars />
+      <StarsBackground />
       <div className={cn("relative z-10 w-full", className)} {...props}>
         {children}
       </div>
