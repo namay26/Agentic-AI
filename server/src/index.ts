@@ -24,7 +24,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 dotenv.config({
-  path: resolve(__dirname, "../../.env"),
+  path: resolve(__dirname, "../.env"),
 });
 
 // Initialize Express app
@@ -78,7 +78,7 @@ app.listen(port, async () => {
     //       twitterPoller.scrappedData.delete(data);
     //     }
     //   },
-    //   1000 * 60 * 10
+    //   1000 * 60 * 10 
     // );
 
     // Start ngrok tunnel for development
