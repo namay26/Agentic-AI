@@ -2,28 +2,28 @@ import { HoverEffect } from "@/components/ui/card-hover-effect";
 
 export function CardHoverEffectDemo() {
   return (
-    <div className="max-w-5xl mx-auto px-8">
+    <div className="max-w-5xl mx-auto px-8 mt-20">
       <HoverEffect items={projects} />
     </div>
   );
 }
 export const projects = [
   {
-    title: "Stripe",
+    title: "AI Agents",
     description:
-      "A technology company that builds economic infrastructure for the internet.",
+      "Uses AI to scrape tweets to detect memecoin launches at the earliest.",
     link: "",
   },
   {
-    title: "Netflix",
+    title: "Cross Chain Bridging",
     description:
-      "A streaming service that offers a wide variety of award-winning TV shows, movies, anime, documentaries, and more on thousands of internet-connected devices.",
+      "Allows user on Arbitrum to buy Solana memecoins directly with USDC/USDT.",
     link: "",
   },
   {
-    title: "Google",
+    title: "Easy UI",
     description:
-      "A multinational technology company that specializes in Internet-related services and products.",
+      "Easy-to-use on-boarding so users can place orders conveniently.",
     link: "",
   },
   
