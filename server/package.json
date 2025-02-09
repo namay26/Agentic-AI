@@ -32,6 +32,7 @@
     "http-errors": "^2.0.0",
     "jsonc-parser": "^3.3.1",
     "node-cache": "^5.1.2",
+    "openai": "^4.83.0",
     "nodemon": "^3.1.9",
     "prettier": "^3.4.2",
     "tsc-watch": "^6.2.1",
@@ -40,6 +41,7 @@
   "devDependencies": {
     "@typechain/ethers-v6": "^0.5.1",
     "@types/better-sqlite3": "^7.6.12",
+    "@types/bn.js": "^5.1.6",
     "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
