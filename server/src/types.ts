@@ -71,4 +71,10 @@ export interface TweetData {
 export interface TokenInfo {
   name: string;
   address: string;
+  poolId: string;
+}
+
+export interface Token {
+  name: string;
+  address: string;
 }

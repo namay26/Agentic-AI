@@ -6,6 +6,8 @@ import { fileURLToPath } from "url";
 import { dirname } from "path";
 import cookieParser from "cookie-parser";
 import { PollerService } from "./services/poller.service.js";
+import { Controller } from "./controller/controller.js";
+
 // import { NgrokService } from "./services/ngrok.service.js";
 // import { TelegramService } from "./services/telegram.service.js";
 // import { IService } from "./services/base.service.js";
@@ -100,3 +102,26 @@ app.listen(port, async () => {
   }
 });
 
+app.get("/token", (_req, res) => {
+  res.json({data: Controller.getTokensList})
+})
+
+app.post("/buy", async (req, res) => {
+  const data = req.body;
+  const isSuccess = await Controller.buyTokens(data.user, data.amount, data.arbitrumToken, data.tokenOut);
+  if(isSuccess) {
+    res.status(201).send({message: "Buy Successful"})
+  } else {
+    res.status(500).send({error: "Sever Error"})
+  }
+})
+
+app.post("/sell", async (req, res) => {
+  const data = req.body;
+  const isSuccess = await Controller.buyTokens(data.user, data.amount, data.tokenIn, data.arbitrumToken);
+  if(isSuccess) {
+    res.status(201).send({message: "Buy Successful"})
+  } else {
+    res.status(500).send({error: "Sever Error"})
+  }
+})
