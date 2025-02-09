@@ -12,38 +12,36 @@ export function WobbleCardDemo() {
       >
         <div className="max-w-xs">
           <h2 className="text-left text-balance text-base md:text-xl lg:text-3xl font-semibold tracking-[-0.015em] text-white">
-            Gippity AI powers the entire universe
+          AI-Powered Memecoin Detection
           </h2>
           <p className="mt-4 text-left  text-base/6 text-neutral-200">
-            With over 100,000 mothly active bot users, Gippity AI is the most
-            popular AI platform for developers.
+          Memecoins often experience explosive growth immediately after launch, making early entry crucial. Our AI agents continuously scrape Twitter to detect new memecoin launch announcements in real-time, ensuring users never miss an opportunity.
           </p>
         </div>
-        <Image
-          src="/linear.webp"
+        {/* <Image
+          src="/logo.png"
           width={500}
           height={500}
           alt="linear demo image"
           className="absolute -right-4 lg:-right-[40%] grayscale filter -bottom-10 object-contain rounded-2xl"
-        />
+        /> */}
       </WobbleCard>
       <WobbleCard containerClassName="col-span-1 min-h-[300px]">
         <h2 className="max-w-80  text-left text-balance text-base md:text-xl lg:text-3xl font-semibold tracking-[-0.015em] text-white">
-          No shirt, no shoes, no weapons.
+        Cross-Chain Trading Without Hassle
         </h2>
         <p className="mt-4 max-w-[26rem] text-left  text-base/6 text-neutral-200">
-          If someone yells “stop!”, goes limp, or taps out, the fight is over.
+        Most memecoins launch on Solana, but users from other chains face a tedious onboarding process—setting up a Solana-compatible wallet, funding it with SOL, and executing trades. Our solution instantly launches a mirrored token on Arbitrum, allowing users to place buy/sell orders without needing direct access to Solana.
         </p>
       </WobbleCard>
       <WobbleCard containerClassName="col-span-1 lg:col-span-3 bg-blue-900 min-h-[500px] lg:min-h-[600px] xl:min-h-[300px]">
         <div className="max-w-sm">
           <h2 className="max-w-sm md:max-w-lg  text-left text-balance text-base md:text-xl lg:text-3xl font-semibold tracking-[-0.015em] text-white">
-            Signup for blazing-fast cutting-edge state of the art Gippity AI
-            wrapper today!
+          Automated Liquidity & Instant Trading
           </h2>
           <p className="mt-4 max-w-[26rem] text-left  text-base/6 text-neutral-200">
-            With over 100,000 mothly active bot users, Gippity AI is the most
-            popular AI platform for developers.
+          When our AI detects a new memecoin launch on Solana, we automatically create a corresponding token on Arbitrum pegged to the original. This enables traders from other chains to participate in the hype immediately, without manually bridging assets or switching networks.
+
           </p>
         </div>
         <Image

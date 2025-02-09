@@ -1,369 +1,371 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { X, ChevronDown } from 'lucide-react';
 import axios from 'axios';
 import Image from 'next/image';
 import { usePrivy } from "@privy-io/react-auth";
-import Web3, { Contract } from 'web3'; 
+import Web3, { Contract } from 'web3';
 import localFont from 'next/font/local';
 import { ShootingStars } from '@/components/ui/shooting-stars';
 import { StarsBackground } from '@/components/ui/stars-background';
 import Navbar from '@/components/ui/Navbar';
 
+const CONTRACT_ADDRESS = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
+
 const myFont = localFont({
   src: [
     {
       path: '../../Mimoid.woff',
-      weight: '800', 
-      style: 'normal', 
+      weight: '800',
+      style: 'normal',
     },
   ],
   display: 'swap',
 });
 
 const contractABI = [
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_usdcAddr",
-				"type": "address"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"inputs": [],
-		"name": "Arbitrum__InsufficentBalance",
-		"type": "error"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "user",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			},
-			{
-				"internalType": "address",
-				"name": "token",
-				"type": "address"
-			}
-		],
-		"name": "buy",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "owner",
-				"type": "address"
-			}
-		],
-		"name": "OwnableInvalidOwner",
-		"type": "error"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "account",
-				"type": "address"
-			}
-		],
-		"name": "OwnableUnauthorizedAccount",
-		"type": "error"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "user",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "my_token",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "meme_coin",
-				"type": "string"
-			}
-		],
-		"name": "BuyOrder",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "user",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "token",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "BuyOrderFulfilled",
-		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "actualToken",
-				"type": "string"
-			}
-		],
-		"name": "createToken",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "user",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "amountToMint",
-				"type": "uint256"
-			},
-			{
-				"internalType": "address",
-				"name": "token",
-				"type": "address"
-			}
-		],
-		"name": "fulfillBuy",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "user",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "amountToPay",
-				"type": "uint256"
-			}
-		],
-		"name": "fulfillSell",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "previousOwner",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "OwnershipTransferred",
-		"type": "event"
-	},
-	{
-		"inputs": [],
-		"name": "renounceOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "user",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "amountOfTokens",
-				"type": "uint256"
-			},
-			{
-				"internalType": "address",
-				"name": "token",
-				"type": "address"
-			}
-		],
-		"name": "sell",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "user",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "numTokens",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "my_token",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "meme_coin",
-				"type": "string"
-			}
-		],
-		"name": "SellOrder",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "user",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "SellOrderFulfilled",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "token",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "memecoin",
-				"type": "string"
-			}
-		],
-		"name": "TokenCreated",
-		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "transferOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "backendWalletAddress",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "owner",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "usdcTokenAddress",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	}
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_usdcAddr",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+    },
+    {
+        "inputs": [],
+        "name": "Arbitrum__InsufficentBalance",
+        "type": "error"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "user",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "token",
+                "type": "address"
+            }
+        ],
+        "name": "buy",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "owner",
+                "type": "address"
+            }
+        ],
+        "name": "OwnableInvalidOwner",
+        "type": "error"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "account",
+                "type": "address"
+            }
+        ],
+        "name": "OwnableUnauthorizedAccount",
+        "type": "error"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "user",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "my_token",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "string",
+                "name": "meme_coin",
+                "type": "string"
+            }
+        ],
+        "name": "BuyOrder",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "user",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "token",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+            }
+        ],
+        "name": "BuyOrderFulfilled",
+        "type": "event"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "actualToken",
+                "type": "string"
+            }
+        ],
+        "name": "createToken",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "user",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "amountToMint",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "token",
+                "type": "address"
+            }
+        ],
+        "name": "fulfillBuy",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "user",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "amountToPay",
+                "type": "function"
+            }
+        ],
+        "name": "fulfillSell",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "previousOwner",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "newOwner",
+                "type": "address"
+            }
+        ],
+        "name": "OwnershipTransferred",
+        "type": "event"
+    },
+    {
+        "inputs": [],
+        "name": "renounceOwnership",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "user",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "amountOfTokens",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "token",
+                "type": "address"
+            }
+        ],
+        "name": "sell",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "user",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "numTokens",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "my_token",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "string",
+                "name": "meme_coin",
+                "type": "string"
+            }
+        ],
+        "name": "SellOrder",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "user",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "function"
+            }
+        ],
+        "name": "SellOrderFulfilled",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "token",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "string",
+                "name": "memecoin",
+                "type": "string"
+            }
+        ],
+        "name": "TokenCreated",
+        "type": "event"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "newOwner",
+                "type": "address"
+            }
+        ],
+        "name": "transferOwnership",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "backendWalletAddress",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "owner",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "usdcTokenAddress",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    }
 ];
 
 type CoinData = {
@@ -378,33 +380,35 @@ type CoinData = {
 type Token = {
   symbol: string;
   icon: string;
-  address: string; 
+  address: string;
 };
-
-const tokens: Token[] = [
-  { symbol: 'USDT', icon: '💰', address: '0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9' }, 
-  { symbol: 'USDC', icon: '💵', address: '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8' },
-];
-
-const CONTRACT_ADDRESS = '0x256Bac4CCD510f812efAE680a61e6Ebd6356F5EA'; 
-
 const CryptoTradingPage = () => {
   const { login, logout, authenticated, user } = usePrivy();
 
   const [activeTab, setActiveTab] = useState<'buy' | 'sell'>('sell');
   const [spendAmount, setSpendAmount] = useState<string>('');
   const [receiveAmount, setReceiveAmount] = useState<string>('0');
-  const [spendToken, setSpendToken] = useState<Token>(tokens[0]);
-  const [receiveToken, setReceiveToken] = useState<Token>(tokens[1]);
+  const [spendToken, setSpendToken] = useState<Token>({ symbol: 'USDT', icon: '💰', address: '0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9' });
+  const [receiveToken, setReceiveToken] = useState<Token>({ symbol: 'USDC', icon: '💵', address: '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8' });
   const [isSpendDropdownOpen, setIsSpendDropdownOpen] = useState(false);
   const [isReceiveDropdownOpen, setIsReceiveDropdownOpen] = useState(false);
   const [memeCoins, setMemeCoins] = useState<CoinData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-	const [memeCoinName, setMemeCoinName] = useState<string>(''); 
+
   const [contract, setContract] = useState<Contract | null>(null);
   const [web3, setWeb3] = useState<Web3 | null>(null);
-
+	 const [newMemeCoin, setNewMemeCoin] = useState({
+        name: '',
+        address: '',
+      });
+	 const [tokens, setTokens] = useState<Token[]>([
+        { symbol: 'USDT', icon: '💰', address: '0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9' },
+        { symbol: 'USDC', icon: '💵', address: '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8' },
+        { symbol: "BONK", icon: '🐶', address: 'DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263' },
+        { symbol: "Official Trump", icon: '👑', address: '6p6xgHyF7AeE6TZkSmFsko444wqoP15icUSqi2jfGiPN' },
+        { symbol: "Melania meme", icon: '🌸', address: 'FUAfBo2jgks6gB4Z4LfZkqSZgzNucisEHqnNebaRxM1P' }
+  ]);
 
   useEffect(() => {
     fetchMemeCoinData();
@@ -420,7 +424,7 @@ const CryptoTradingPage = () => {
             const web3Instance = new Web3((window as any).ethereum);
             setWeb3(web3Instance);
             await (window as any).ethereum.enable(); 
-            const contractInstance = new web3Instance.eth.Contract(
+            const contractInstance: Contract = new web3Instance.eth.Contract(
               contractABI as any, 
               CONTRACT_ADDRESS
             );
@@ -430,10 +434,10 @@ const CryptoTradingPage = () => {
             setError("Could not connect to wallet. Please try again.");
           }
         }
-        else if ((window as any).web3) {
+         else if ((window as any).web3) {
           const web3Instance = new Web3((window as any).web3.currentProvider);
           setWeb3(web3Instance);
-          const contractInstance = new web3Instance.eth.Contract(
+          const contractInstance: Contract = new web3Instance.eth.Contract(
             contractABI as any, 
             CONTRACT_ADDRESS
           );
@@ -452,8 +456,6 @@ const CryptoTradingPage = () => {
 
     initWeb3();
   }, [authenticated, user]);
-
-
   const handleTabChange = (tab: 'buy' | 'sell') => {
     setActiveTab(tab);
     setSpendAmount('');
@@ -467,7 +469,7 @@ const CryptoTradingPage = () => {
     }
   };
 
- const handleTokenSwitch = (dropdownType: 'spend' | 'receive', selected: Token) => {
+  const handleTokenSwitch = (dropdownType: 'spend' | 'receive', selected: Token) => {
     if (dropdownType === 'spend') {
       setSpendToken(selected);
       setIsSpendDropdownOpen(false);
@@ -564,7 +566,33 @@ const CryptoTradingPage = () => {
       setError(`Token creation failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   };
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setNewMemeCoin({ ...newMemeCoin, [e.target.name]: e.target.value });
+    };
+	
 
+  const handleAddToken = () => {
+    if(newMemeCoin.name=="" || newMemeCoin.address==""){
+        return;
+    }
+        setTokens((prevTokens) => {
+            const tokenExists = prevTokens.some(token => token.address === newMemeCoin.address);
+
+            if (!tokenExists) {
+                return [
+                    ...prevTokens,
+                    { symbol: newMemeCoin.name, icon: '🪙', address: newMemeCoin.address },
+                ];
+            } else {
+                console.log("Token already exists in the list.");
+                return prevTokens;
+            }
+        });
+    };
+
+  function setNewMeme(arg0: any): void {
+    throw new Error('Function not implemented.');
+  }
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
@@ -627,7 +655,6 @@ const CryptoTradingPage = () => {
                 Sell
               </button>
             </div>
-
             <div className="space-y-4">
               <div className="bg-gray-900 rounded-lg p-4">
                 <label className="text-sm text-gray-400">Spend</label>
@@ -672,8 +699,7 @@ const CryptoTradingPage = () => {
                   </div>
                 </div>
               </div>
-
-              <div className="bg-gray-900 rounded-lg p-4">
+               <div className="bg-gray-900 rounded-lg p-4">
                 <label className="text-sm text-gray-400">Receive</label>
                 <div className="flex items-center justify-between mt-2">
                   <input
@@ -728,22 +754,29 @@ const CryptoTradingPage = () => {
             )}
           </div>
         </div>
-        <div className="rounded-3xl p-6 mt-8 backdrop-filter backdrop-blur-lg bg-gray-800/50 border border-gray-700 shadow-2xl neon-glow">
-        <h2 className={`text-xl font-semibold mb-4 ${myFont.className}`}>Create Token</h2>
-            <input
-              type="text"
-              value={memeCoinName}
-              onChange={(e) => setMemeCoinName(e.target.value)}
-              placeholder="Enter Meme Coin Name"
-              className="bg-gray-900 text-white rounded-lg p-3 w-full"
-            />
-            <button
-              className="w-full py-3 bg-purple-500 text-white rounded-lg mt-4 font-medium hover:bg-purple-400"
-              onClick={handleCreateToken}
-            >
-              Create Token
-            </button>
-          </div>
+         <div className="rounded-3xl p-6 mt-8 backdrop-filter backdrop-blur-lg bg-gray-800/50 border border-gray-700 shadow-2xl neon-glow">
+              <h2 className={`text-xl font-semibold mb-4 ${myFont.className}`}>Add Custom Token</h2>
+			    <input
+                type="text"
+                name="name"
+                placeholder="Enter Token Name"
+                className="bg-gray-900 text-white rounded-lg p-3 w-full mb-2"
+                onChange={(e) => setNewMeme({ ...newMeme, name: e.target.value })}
+              />
+              <input
+                type="text"
+                name="address"
+                placeholder="Enter Token Address"
+                className="bg-gray-900 text-white rounded-lg p-3 w-full mb-2"
+                 onChange={(e) => setNewMeme({ ...newMeme, address: e.target.value })}
+              />
+              <button
+                className="w-full py-3 bg-purple-500 text-white rounded-lg mt-4 font-medium hover:bg-purple-400"
+                onClick={() => handleAddToken()}
+              >
+                Add Token
+              </button>
+        </div>
       </div>
     </div>
   );
