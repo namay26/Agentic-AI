@@ -9,6 +9,7 @@ import Web3 from 'web3';
 import localFont from 'next/font/local';
 import { ShootingStars } from '@/components/ui/shooting-stars';
 import { StarsBackground } from '@/components/ui/stars-background';
+import Navbar from '@/components/ui/Navbar';
 
 const myFont = localFont({
   src: [
@@ -567,6 +568,7 @@ const CryptoTradingPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
+      <Navbar className="top-2" login={login} logout={logout} authenticated={authenticated} user={user} />
       <ShootingStars />
       <StarsBackground />
       <div className="max-w-7xl mx-auto p-8">

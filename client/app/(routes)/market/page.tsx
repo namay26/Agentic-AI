@@ -3,6 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import { TrendingUp, Flame, Star } from 'lucide-react';
 import axios from 'axios';
+import { PrivyProvider, usePrivy } from "@privy-io/react-auth";
+import { ShootingStars } from '@/components/ui/shooting-stars';
+import { StarsBackground } from '@/components/ui/stars-background';
+import Navbar from '@/components/ui/Navbar';
 
 interface Coin {
     id: string;
@@ -92,9 +96,12 @@ const MemeCoinsDashboard = () => {
         const interval = setInterval(fetchMemeCoinData, 60000);
         return () => clearInterval(interval);
     }, []);
-
+    const { login, logout, authenticated, user } = usePrivy();
     return (
         <div className="min-h-screen w-full bg-gray-900">
+          <Navbar className="top-2" login={login} logout={logout} authenticated={authenticated} user={user} />
+          <ShootingStars />
+          <StarsBackground />
             <div className="container mx-auto p-6 space-y-6 text-gray-100">
                 <div className="flex items-center justify-between">
                     <h1 className="text-2xl font-bold text-white">Top Meme Coins by Market Cap</h1>

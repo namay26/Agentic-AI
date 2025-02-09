@@ -11,10 +11,10 @@ import { useRouter } from 'next/navigation'
 import { HeroParallax } from "@/components/ui/hero-parallax";
 import { SparklesCore } from "@/components/ui/sparkles";
 import { WobbleCardDemo} from "./wobble-card"
+import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 
 
 import localFont from 'next/font/local';
-
 
 const myFont = localFont({
   src: [
@@ -38,6 +38,49 @@ const myFont2 = localFont({
   display: 'swap',
 });
 
+
+const AceternityLogo = () => {
+  return (
+    <svg
+      width="66"
+      height="65"
+      viewBox="0 0 66 65"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-3 w-3 text-black dark:text-white"
+    >
+      <path
+        d="M8 8.05571C8 8.05571 54.9009 18.1782 57.8687 30.062C60.8365 41.9458 9.05432 57.4696 9.05432 57.4696"
+        stroke="currentColor"
+        strokeWidth="15"
+        strokeMiterlimit="3.86874"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+};
+
+
+export const projects = [
+  {
+    title: "Stripe",
+    description:
+      "A technology company that builds economic infrastructure for the internet.",
+    link: "https://stripe.com",
+  },
+  {
+    title: "Netflix",
+    description:
+      "A streaming service that offers a wide variety of award-winning TV shows, movies, anime, documentaries, and more on thousands of internet-connected devices.",
+    link: "https://netflix.com",
+  },
+  {
+    title: "Google",
+    description:
+      "A multinational technology company that specializes in Internet-related services and products.",
+    link: "https://google.com",
+  }
+];
 
 export const products = [
   {
@@ -155,7 +198,7 @@ function Home() {
   return (
     <div className="w-full h-full bg-black"> 
 
-      <Navbar className="top-2" login={login} logout={logout} authenticated={authenticated} user={user} />
+      {/* <Navbar className="top-2" login={login} logout={logout} authenticated={authenticated} user={user} /> */}
       <WavyBackground className="w-full min-h-screen relative">
       
       <div className="flex flex-col items-center w-full space-y-12 p-0 transform -translate-y-1/4">
@@ -168,7 +211,6 @@ function Home() {
               <p className={`text-base md:text-lg mt-8 text-white font-normal inter-var text-center ${myFont2.className}`}> 
                 Connect your wallet to get started!
               </p>
-              <CardHoverEffectDemo />
               {/* <div className="max-w-7xl mx-auto px-4 mt-32 pb-40"> 
                 <HoverEffect items={projects} />
               </div> */}
@@ -177,9 +219,12 @@ function Home() {
             <p className="text-white text-lg">
               Connected as {user?.wallet?.address}
             </p>
+            
           )}
+          <CardHoverEffectDemo />
         </div>
-        <div className="mt-20">
+        
+        <div className="mt-0">
           <CryptoLanding />
         </div>
 

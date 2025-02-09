@@ -10,7 +10,7 @@ import localFont from 'next/font/local';
 const myFont = localFont({
   src: [
     {
-      path: '../Mimoid.woff',
+      path: 'Mimoid.woff',
       weight: '800',
       style: 'normal',
     },
