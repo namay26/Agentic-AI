@@ -8,14 +8,14 @@ import cookieParser from "cookie-parser";
 import { PollerService } from "./services/poller.service.js";
 // import { NgrokService } from "./services/ngrok.service.js";
 // import { TelegramService } from "./services/telegram.service.js";
-import { IService } from "./services/base.service.js";
+// import { IService } from "./services/base.service.js";
 // import twitterRouter from "./routes/twitter.js";
 // import discordRouter from "./routes/discord.js";
-import cookieParser from "cookie-parser";
+// import cookieParser from "cookie-parser";
 // import githubRouter from "./routes/github.js";
-import { AnyType } from "./utils.js";
-import { isHttpError } from "http-errors";
-import { TweetData } from "./types.js";
+// import { AnyType } from "./utils.js";
+// import { isHttpError } from "http-errors";
+// import { TweetData } from "./types.js";
 
 // Convert ESM module URL to filesystem path
 const __filename = fileURLToPath(import.meta.url);
