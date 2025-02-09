@@ -5,7 +5,7 @@ import { resolve } from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import cookieParser from "cookie-parser";
-import { PollerService } from "./services/poller.service.js";
+// import { PollerService } from "./services/poller.service.js";
 import { Controller } from "./controller/controller.js";
 
 // import { NgrokService } from "./services/ngrok.service.js";
@@ -54,22 +54,9 @@ app.use(cookieParser());
 // Mount GitHub OAuth routes
 // app.use("/auth/github", githubRouter);
 
-// 404 handler
-app.use((_req: Request, _res: Response, _next: NextFunction) => {
-  _res.status(404).json({
-    message: `Route ${_req.method} ${_req.url} not found`,
-  });
-});
 
-// Start server and initialize services
-app.listen(port, async () => {
-    console.log(`Server running on PORT: ${port}`);
-    console.log("Server Environment:", process.env.NODE_ENV);
-    try{
-    // Start the gaia polling service
-    const twitterPoller = PollerService.getInstance();
-    twitterPoller.start();
 
+<<<<<<< Updated upstream
     // setInterval(
     //   () => {
     //     for (const data of twitterPoller.scrappedData) {
@@ -80,27 +67,9 @@ app.listen(port, async () => {
     //   },
     //   1000 * 60 * 10 
     // );
+=======
+>>>>>>> Stashed changes
 
-    // Start ngrok tunnel for development
-    // const ngrokService = NgrokService.getInstance();
-    // await ngrokService.start();
-    // services.push(ngrokService);
-
-    // const ngrokUrl = ngrokService.getUrl()!;
-    // console.log("NGROK URL:", ngrokUrl);
-
-    // Initialize Telegram bot and set webhook
-    // await telegramService.start();
-    // await telegramService.setWebhook(ngrokUrl);
-    // services.push(telegramService);
-
-    // const botInfo = await telegramService.getBotInfo();
-    // console.log("Telegram Bot URL:", `https://t.me/${botInfo.username}`);
-  } catch (e) {
-    console.error("Failed to start server:", e);
-    process.exit(1);
-  }
-});
 
 app.get("/token", (_req, res) => {
   res.json({data: Controller.getTokensList})
@@ -108,7 +77,7 @@ app.get("/token", (_req, res) => {
 
 app.post("/buy", async (req, res) => {
   const data = req.body;
-  const isSuccess = await Controller.buyTokens(data.user, data.amount, data.arbitrumToken, data.tokenOut);
+  const isSuccess = await Controller.buyTokens(data.user, data.amount, data.tokenOut);
   if(isSuccess) {
     res.status(201).send({message: "Buy Successful"})
   } else {
@@ -118,10 +87,60 @@ app.post("/buy", async (req, res) => {
 
 app.post("/sell", async (req, res) => {
   const data = req.body;
-  const isSuccess = await Controller.buyTokens(data.user, data.amount, data.tokenIn, data.arbitrumToken);
+  const isSuccess = await Controller.sellTokens(data.user, data.amount, data.tokenIn);
   if(isSuccess) {
     res.status(201).send({message: "Buy Successful"})
   } else {
     res.status(500).send({error: "Sever Error"})
   }
 })
+
+
+// 404 handler
+app.use((_req: Request, _res: Response, _next: NextFunction) => {
+  _res.status(404).json({
+    message: `Route ${_req.method} ${_req.url} not found`,
+  });
+});
+
+//get route to trigger poller service
+// Start server and initialize services
+app.listen(port, async () => {
+  console.log(`Server running on PORT: ${port}`);
+  console.log("Server Environment:", process.env.NODE_ENV);
+  try{
+  // Start the gaia polling service
+  // const twitterPoller = PollerService.getInstance();
+  // twitterPoller.start();
+
+  // setInterval(
+  //   () => {
+  //     for (const data of twitterPoller.scrappedData) {
+  //       const tweetText: string = (data as TweetData).text;
+  //       //send tweetText to gaia model
+  //       twitterPoller.scrappedData.delete(data);
+  //     }
+  //   },
+  //   1000 * 60 * 10
+  // );
+
+  // Start ngrok tunnel for development
+  // const ngrokService = NgrokService.getInstance();
+  // await ngrokService.start();
+  // services.push(ngrokService);
+
+  // const ngrokUrl = ngrokService.getUrl()!;
+  // console.log("NGROK URL:", ngrokUrl);
+
+  // Initialize Telegram bot and set webhook
+  // await telegramService.start();
+  // await telegramService.setWebhook(ngrokUrl);
+  // services.push(telegramService);
+
+  // const botInfo = await telegramService.getBotInfo();
+  // console.log("Telegram Bot URL:", `https://t.me/${botInfo.username}`);
+} catch (e) {
+  console.error("Failed to start server:", e);
+  process.exit(1);
+}
+});
