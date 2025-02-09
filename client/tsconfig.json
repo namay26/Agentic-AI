@@ -32,7 +32,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app"
-  ],
+, "components/ui/ParticlesBackground.jsx"  ],
   "exclude": [
     "node_modules"
   ]

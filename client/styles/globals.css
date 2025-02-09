@@ -5,6 +5,8 @@
 :root {
   background-color: black;
   color-scheme: dark;
+  align-items: normal;
+  /* align-items: flex-start; */
 }
 
 
@@ -18,8 +20,8 @@ body {
 }
 
 @font-face {
-  font-family: 'GenericTechno';
-  src: url('../public/fonts/GenericTechno.otf') format('otf');
+  font-family: 'Mimoid';
+  src: url('../app/Mimoid.woff') format('otf');
   font-weight: normal;
   font-style: normal;
 }
@@ -37,4 +39,16 @@ body {
            focus:outline-none focus:ring-1 focus:ring-primary 
            rounded-lg;
   }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-white;
+  }
+
+  .neon-glow {
+    box-shadow: 0 0 20px 5px #0ff, 0 0 40px 10px #0ff, 0 0 60px 15px #0ff, 0 0 80px 20px #0ff;
+  }
+  
+  
+
 }
+
