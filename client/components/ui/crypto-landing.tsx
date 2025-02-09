@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const words = [
   {
-    text: "258,004,491",
+    text: "2,58,004",
     className: "text-7xl font-bold text-blue-400 mb-2",
   },
 ];
@@ -56,27 +56,37 @@ const CryptoLanding = () => {
   return (
     <div className="w-full min-h-screen bg-black-900 text-white">
       <div className="w-full px-4 py-12">
-        <div className="grid lg:grid-cols-2 gap-12 max-w-[1800px] mx-auto">
-          <div className="space-y-8">
+        <div className="flex justify-between items-start max-w-[1800px] mx-auto">
+          {/* Left side - Text content */}
+          <div className="w-1/2 space-y-8 pr-12">
             <div>
               <TypewriterEffectSmooth words={words} />
               <h2 className="text-6xl font-bold">USERS<br /> TRUST US</h2>
             </div>
+          </div>
 
+          {/* Right side - Memecoins table */}
+          <div className="w-1/2">
             <div className="bg-gray-800 rounded-xl p-6">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="font-semibold">Popular Cryptocurrencies</h3>
-                <button className="text-gray-400 text-sm">View All →</button>
+                <h3 className="font-semibold">Popular Memecoins</h3>
+                <button className="text-gray-400 text-sm hover:text-gray-300 transition-colors">
+                  View All →
+                </button>
               </div>
 
               <div className="space-y-4">
                 {isLoading ? (
-                  <p>Loading live data...</p>
+                  <div className="flex items-center justify-center py-8">
+                    <p>Loading live data...</p>
+                  </div>
                 ) : error ? (
-                  <p className="text-red-500">{error}</p>
+                  <div className="text-red-500 py-4">
+                    {error}
+                  </div>
                 ) : (
                   coins.map((coin) => (
-                    <div key={coin.id} className="flex items-center justify-between">
+                    <div key={coin.id} className="flex items-center justify-between p-2 hover:bg-gray-700/50 rounded-lg transition-colors">
                       <div className="flex items-center gap-3">
                         <Image
                           src={coin.image}
@@ -91,8 +101,11 @@ const CryptoLanding = () => {
                         </div>
                       </div>
                       <div className="text-right">
-                        <div>${coin.current_price.toFixed(2)}</div>
-                        <div className={coin.price_change_percentage_24h >= 0 ? 'text-green-500' : 'text-red-500'}>
+                        <div className="font-medium">${coin.current_price.toFixed(2)}</div>
+                        <div className={`${
+                          coin.price_change_percentage_24h >= 0 ? 'text-green-500' : 'text-red-500'
+                        } text-sm`}>
+                          {coin.price_change_percentage_24h >= 0 ? '+' : ''}
                           {coin.price_change_percentage_24h.toFixed(2)}%
                         </div>
                       </div>

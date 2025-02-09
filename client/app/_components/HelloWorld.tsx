@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { WavyBackground } from "../../components/ui/wavy-background";
 import { PrivyProvider, usePrivy } from "@privy-io/react-auth";
 import { cn } from "@/lib/utils";
@@ -11,9 +11,10 @@ import { useRouter } from 'next/navigation'
 import { HeroParallax } from "@/components/ui/hero-parallax";
 import { SparklesCore } from "@/components/ui/sparkles";
 import { WobbleCardDemo} from "./wobble-card"
-import Image from "next/image";
+
 
 import localFont from 'next/font/local';
+
 
 const myFont = localFont({
   src: [
@@ -152,13 +153,15 @@ function Home() {
   const { login, logout, authenticated, user } = usePrivy();
 
   return (
-    <div className="w-full min-h-screen bg-black"> 
+    <div className="w-full h-full bg-black"> 
+
       <Navbar className="top-2" login={login} logout={logout} authenticated={authenticated} user={user} />
       <WavyBackground className="w-full min-h-screen relative">
-        <div className="flex flex-col items-center w-full space-y-12 p-4 pt-52">
-        <h1 className={`text-2xl md:text-4xl lg:text-7xl text-white font-bold text-center ${myFont.className}`}>
-          AGENTIC AI
-        </h1>
+      
+      <div className="flex flex-col items-center w-full space-y-12 p-0 transform -translate-y-1/4">
+      <h1 className={`text-3xl md:text-5xl lg:text-9xl font-bold text-center gradient-text ${myFont.className}`}>
+        AGENTIC AI
+      </h1>
           
           {!authenticated ? (
             <>
@@ -176,10 +179,13 @@ function Home() {
             </p>
           )}
         </div>
-        <CryptoLanding />
+        <div className="mt-20">
+          <CryptoLanding />
+        </div>
+
         <HeroParallax products={products} />
-        <div className="h-[30rem] w-full bg-black flex flex-col items-center justify-center overflow-hidden rounded-md">
-            <h2 className="md:text-7xl text-3xl lg:text-9xl font-bold text-center text-white relative z-20 mb-4">
+        <div className="h-full w-full bg-black flex flex-col items-center justify-center rounded-md mt-20">
+        <h2 className="md:text-7xl text-3xl lg:text-9xl font-bold text-center text-white relative z-20 mb-4">
               Features
             </h2>
             <div className="w-[40rem] h-32 relative">
@@ -202,9 +208,10 @@ function Home() {
               {/* Radial Gradient to prevent sharp edges */}
               <div className="absolute inset-0 w-full h-full bg-black [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"></div>
             </div>
+            <WobbleCardDemo />
           </div>
-          <WobbleCardDemo />
-          {/* <StickyScrollRevealDemo /> */}
+          
+
 
       </WavyBackground>
     </div>

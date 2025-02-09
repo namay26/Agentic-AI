@@ -1,6 +1,10 @@
+"use client";
+
 import "@/styles/globals.css";
 import { Inter } from "next/font/google";
 import localFont from 'next/font/local';
+import { PrivyProvider } from "@privy-io/react-auth";
+
 
 const myFont = localFont({
   src: [
@@ -15,11 +19,6 @@ const myFont = localFont({
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
-  title: "Agentic-AI",
-  description: "Get started with Collab.Land",
-};
-
 export default function RootLayout({
   children,
 }: {
@@ -28,7 +27,16 @@ export default function RootLayout({
   return (
     <html lang="en" className="light">
       <body className={`${inter.className} bg-white min-h-screen`}>
-        {children}
+        <PrivyProvider
+          appId="cm6l86lp100vykh0tt3erllts"
+          config={{
+            embeddedWallets: {
+              createOnLogin: "users-without-wallets",
+            },
+          }}
+        >
+          {children}
+        </PrivyProvider>
       </body>
     </html>
   );
